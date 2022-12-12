@@ -1,0 +1,137 @@
+﻿<dx:DXWindow x:Class="OpticaNX.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OpticaNX"
+        mc:Ignorable="d"
+		  xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+		  xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+		  xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+		  xmlns:dxbh="http://schemas.devexpress.com/winfx/2008/xaml/bars/internal"
+		  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+		  xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+		  xmlns:dxt="http://schemas.devexpress.com/winfx/2008/xaml/core/themekeys"
+		  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+		  xmlns:uc="clr-namespace:OpticaNX.View.Control"
+		  xmlns:menu="clr-namespace:OpticaNX.Menu"
+		  xmlns:eventtocmd="clr-namespace:Cressem.Framework.Command;assembly=Cressem.Framework"
+		  Title="{Binding Title}"
+		  Height="800" Width="1000"
+		  dx:ThemeManager.ThemeName="Office2019Black"
+		  DataContext="{StaticResource mainViewModel}">
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+		</i:EventTrigger>
+		<i:EventTrigger EventName="PreviewKeyDown">
+			<eventtocmd:EventToCommand Command="{Binding PreviewKeyDownCommand}"/>
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Key">
+			<eventtocmd:EventToCommand Command="{Binding PreviewKeyDownCommand}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
+	<dx:DXWindow.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/OpticaNX;component/Menu/menu.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<menu:PageCategoryTemplateSelector x:Key="PageTemplateSelector" />
+		</ResourceDictionary>
+		
+	</dx:DXWindow.Resources>
+
+	<dxb:BarManager x:Name="mainBarManager" dx:WorkspaceManager.IsEnabled="True" Margin="-4" >
+		<dx:LoadingDecorator x:Name="LoadingDecorator" SplashScreenDataContext="{Binding}" IsSplashScreenShown="{x:Null}" OwnerLock="None" SplashScreenLocation="CenterContainer" FadeInDuration="0:0:0:0.4" FadeOutDuration="0:0:0:0.4">
+			<dx:LoadingDecorator.SplashScreenTemplate>
+				<DataTemplate>
+					<dx:WaitIndicator DeferedVisibility="true" Content="{Binding SplashCaption}">
+						<dx:WaitIndicator.ContentTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Vertical">
+									<TextBlock Text="Please Wait" FontSize="15"/>
+									<TextBlock Text="{Binding}"/>
+								</StackPanel>
+							</DataTemplate>
+						</dx:WaitIndicator.ContentTemplate>
+					</dx:WaitIndicator>
+				</DataTemplate>
+			</dx:LoadingDecorator.SplashScreenTemplate>
+			<DockPanel>
+				<dxb:BarContainerControl DockPanel.Dock="Top">
+					<dxb:MainMenuControl Caption="Main Menu">
+						<dxb:BarSubItem Content="Model">
+							<dxb:BarButtonItem x:Name="btnNew" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+							<dxb:BarButtonItem x:Name="btnOpen" Content="Open" Glyph="{dx:DXImage Image=Open_16x16.png}" GlyphSize="Large"/>
+							<dxb:BarButtonItem x:Name="btnClose" Content="Close" Glyph="{dx:DXImage Image=Close_16x16.png}" GlyphSize="Large"/>
+						</dxb:BarSubItem>
+						
+						<dxb:BarSubItem Content="View">
+							<dxb:BarButtonItem x:Name="btnImageViewer" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+							<dxb:BarButtonItem x:Name="btnProperty" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+							<dxb:BarButtonItem x:Name="btnWholeViewer" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+						</dxb:BarSubItem>
+
+						<dxb:BarSubItem Content="Inspect">
+							<dxb:BarButtonItem x:Name="btnLive" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+							<dxb:BarButtonItem x:Name="btnOneGrab" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+						</dxb:BarSubItem>
+
+						<dxb:BarSubItem Content="Utility">
+							<dxb:BarButtonItem x:Name="btnIOState" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+						</dxb:BarSubItem>
+
+						<dxb:BarSubItem Content="Help">
+							<dxb:BarButtonItem x:Name="btnOpticaNX" Content="New" Glyph="{dx:DXImage Image=New_16x16.png}" GlyphSize="Large"/>
+						</dxb:BarSubItem>
+					</dxb:MainMenuControl>
+					
+					<dxb:ToolBarControl Caption="Model" RotateWhenVertical="True">
+						<dxb:BarButtonItemLink BarItemName="btnCut"/>
+						<dxb:BarButtonItemLink BarItemName="btnCopy"/>
+						<dxb:BarButtonItemLink BarItemName="btnPaste"/>
+					</dxb:ToolBarControl>
+
+				</dxb:BarContainerControl>
+				<dxd:DockLayoutManager x:Name="mainDockLayoutManager" dx:DXSerializer.SerializationID="dock1" FloatingMode="Desktop" ClosingBehavior="ImmediatelyRemove"  Margin="0"
+										  ActiveDockItem="{Binding Path=ActiveDockItem, Mode=TwoWay}">
+					<dxd:DockLayoutManager.Resources>
+						<Style TargetType="dxd:LayoutPanel">
+							<Setter Property="ShowCaption" Value="{Binding ShowLayoutPanelCaptions}" />
+						</Style>
+					</dxd:DockLayoutManager.Resources>
+					<dxd:LayoutGroup Orientation="Vertical" >
+						<dxd:LayoutGroup Orientation="Horizontal" >
+							<dxd:LayoutPanel AllowClose="False" ShowControlBox="False">
+								<Border>
+									<uc:ImageViewer/>
+								</Border>
+							</dxd:LayoutPanel>
+							<dxd:LayoutGroup Caption="Search" TabIndex="0" AllowClose="False">
+								<dxd:TabbedGroup x:Name="mainTab" ItemWidth="300" SelectedTabIndex="0">
+									<dxd:LayoutPanel Caption="Property" TabIndex="0" ItemWidth="300" AllowClose="False" >
+										<Border>
+											<uc:Property/>
+										</Border>
+									</dxd:LayoutPanel>
+									<dxd:LayoutPanel IsActive="{Binding Path=SearchBoardResultViewModel.IsActive, Mode=TwoWay}" Caption="Whole Viewer" TabIndex="1" ItemWidth="300" AllowClose="False">
+										<Border>
+											<uc:WholeViewer/>
+										</Border>
+									</dxd:LayoutPanel>
+								</dxd:TabbedGroup>
+							</dxd:LayoutGroup>
+						</dxd:LayoutGroup>
+						<dxd:LayoutPanel ItemHeight="30" AllowClose="False" ShowCaption="True" AllowFloat="False" AllowHide="False">
+							<Border >
+								<uc:StatusBar />
+							</Border>
+						</dxd:LayoutPanel>
+					</dxd:LayoutGroup>
+				</dxd:DockLayoutManager>
+			</DockPanel>
+		</dx:LoadingDecorator>
+	</dxb:BarManager>
+</dx:DXWindow>

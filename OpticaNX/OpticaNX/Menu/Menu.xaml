@@ -1,0 +1,68 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+                    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+                    xmlns:mvvm="clr-namespace:OpticaNX.Menu">
+
+	<mvvm:ItemGroupTemplateSelector x:Key="itemGroupTemplateSelector" />
+	
+	<DataTemplate x:Key="galleryItemTemplate">
+      <ContentControl>
+         <dxb:GalleryItem Caption="{Binding Path=Content}" 
+                          Command="{Binding Path=Command}"
+                          CommandParameter="{Binding Path=MenuName}"
+                          Glyph="{Binding Path=Glyph}">            
+         </dxb:GalleryItem>
+      </ContentControl>
+   </DataTemplate>
+
+   <DataTemplate x:Key="galleryItemGroupTemplate">
+      <ContentControl>
+         <dxr:RibbonPageGroup Caption="{Binding Path=Caption}" ShowCaptionButton="False">
+            <dxr:RibbonGalleryBarItem BarItemDisplayMode="Default" GlyphSize="Small" >
+               <dxr:RibbonGalleryBarItem.Gallery>
+                  <dxb:Gallery IsItemCaptionVisible="True" RowCount="2" ColCount="2" Width="450"
+                               ItemGlyphSize="20,20" IsItemDescriptionVisible="False" IsGroupCaptionVisible="False" MinColCount="2" AllowFilter="False" 
+                               ItemGlyphHorizontalAlignment="Left" ItemGlyphVerticalAlignment="Top">
+                      <dxb:GalleryItemGroup ItemsSource="{Binding Path=Items}" 
+                                            ItemTemplate="{StaticResource ResourceKey=galleryItemTemplate}">
+                      </dxb:GalleryItemGroup>
+                  </dxb:Gallery>
+               </dxr:RibbonGalleryBarItem.Gallery>
+            </dxr:RibbonGalleryBarItem>
+         </dxr:RibbonPageGroup>
+      </ContentControl>
+   </DataTemplate>
+
+   <!-- |||||||| -->
+
+   <DataTemplate x:Key="itemTemplate">
+      <ContentControl>
+         <dxb:BarButtonItem Content="{Binding Path=Content}"
+                            Command="{Binding Path=Command}"
+                            CommandParameter="{Binding Path=MenuName}"
+                            Glyph="{Binding Path=Glyph}"
+                            LargeGlyph="{Binding Path=LargeGlyph}"/>
+      </ContentControl>
+   </DataTemplate>
+   
+   <DataTemplate x:Key="itemGroupTemplate">
+      <ContentControl>
+         <dxr:RibbonPageGroup Caption="{Binding Path=Caption}" 
+                              ItemLinksSource="{Binding Path=Items}" 
+                              ItemTemplate="{StaticResource ResourceKey=itemTemplate}">
+         </dxr:RibbonPageGroup>
+      </ContentControl>
+   </DataTemplate>
+
+   <DataTemplate DataType="{x:Type mvvm:MenuViewModel}">
+      <ContentControl>
+         <dxr:RibbonPage Caption="{Binding Path=Caption}" 
+                         GroupsSource="{Binding Path=ItemGroups}" 
+                         GroupTemplate="{StaticResource ResourceKey=itemGroupTemplate}"
+                         GroupTemplateSelector="{StaticResource ResourceKey=itemGroupTemplateSelector}">            
+         </dxr:RibbonPage>
+      </ContentControl>
+   </DataTemplate>
+
+</ResourceDictionary>

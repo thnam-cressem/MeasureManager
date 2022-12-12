@@ -1,0 +1,17 @@
+﻿<Application x:Class="OpticaNX.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:OpticaNX"
+             xmlns:vm="clr-namespace:OpticaNX.ViewModel"
+				 Startup="App_Startup" 
+				 DispatcherUnhandledException="App_DispatcherUnhandledException" 
+				SessionEnding="App_SessionEnding">
+    <Application.Resources>
+		<ResourceDictionary>
+			<vm:MainViewModel x:Key="mainViewModel"/>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Resource/CreesemResourceDictionary.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>
